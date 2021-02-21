@@ -1,18 +1,16 @@
 import java.util.Scanner;
-
 public class Problem01 {
     /*
     Field Properties
     - width and height of the field
-    - the content of the type as '.'
+    - the content of the field
      */
+    final static int WIDTH = 20;
+    final static int HEIGHT = 20;
 
     final static char FIELD_TURTLE_CELL = 'T';
     final static char FIELD_EMPTY_CELL = '.';
     final static char FIELD_MARKED_CELL = '*';
-
-    final static int WIDTH = 20;
-    final static int HEIGHT = 20;
 
     static char[][] fieldContent;
 
@@ -21,7 +19,7 @@ public class Problem01 {
     - initialize itself()
     - putMark(int x, int y)
     - display()
-    - is it inside? -> boolean
+    - is the point inside? -> boolean
      */
 
     static void fieldInit(){
@@ -37,6 +35,7 @@ public class Problem01 {
 
         return x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT;
     }
+
     static void fieldPutMark(int x, int y){
         if (fieldAreCoordsInside(x, y)){
             fieldContent[y][x] = FIELD_MARKED_CELL;
@@ -63,7 +62,6 @@ public class Problem01 {
     - direction
      */
 
-
     static int turtleX = 0, turtleY = 0; //by default, the location is (0, 0)
     static boolean turtleIsPenDown = false; //be default, the pen is UP
     static int turtleDX = 1, turtleDY = 0; //be default, the turtle looks to the right
@@ -83,7 +81,11 @@ public class Problem01 {
         turtleIsPenDown = true;
     }
 
-    //(1, 0) looks to the right. After turning right, it should look down: (0, 1)
+    /*
+    (1, 0) looks to the right. After turning right, it should look down: (0, 1)
+
+    Basically, turtleDX and turtleDY are changing their values between 1 and 0.
+     */
     static void turtleTurnRight(){
         int temp = turtleDX;
         turtleDX = turtleDY;
@@ -101,7 +103,7 @@ public class Problem01 {
     }
 
     static void turtleMove(int steps){
-        for(int i = 0; i < steps; i++){ //Important to do it incrementally
+        for(int i = 0; i < steps; i++){ //Important to do it incrementally to be within the field
             int nextX = turtleX + turtleDX;
             int nextY = turtleY + turtleDY;
 
@@ -118,31 +120,50 @@ public class Problem01 {
     }
 
 
-
     public static void main(String[] args) {
         fieldInit();
 
         Scanner scanner = new Scanner(System.in);
         String input;
-        while(!(input = scanner.next()).equals("Exit")){ //TODO: There might be incorrect commands
-            switch(input){
-                case "PenUp":
+        while(!(input = scanner.nextLine().toLowerCase().trim()).equals("exit")){
+            if(input.isEmpty()){
+                System.err.println("Provide the command");
+                continue;
+            }
+            String[] parts = input.split(" ");
+            switch(parts[0]){
+                case "penup":
                     turtlePutPenUp();
                     break;
-                case "PenDown":
+                case "pendown":
                     turtlePutPenDown();
                     break;
-                case "TurnRight":
+                case "turnright":
                     turtleTurnRight();
                     break;
-                case "TurnLeft":
+                case "turnleft":
                     turtleTurnLeft();
                     break;
-                case "Move":
-                    int steps = scanner.nextInt(); //TODO: It may not be int here AND there might be spaces between
+                case "move":
+                    if(parts.length != 2){
+                        System.err.println("No info about the steps");
+                        continue;
+                    }
+                    int steps;
+                    try{
+                        steps = Integer.parseInt(parts[1]);
+                    }catch (Exception e){
+                        System.err.println("Steps must be a number");
+                        continue;
+                    }
+
+                    if(steps < 0){
+                        System.err.println("Steps must be positive");
+                        continue;
+                    }
                     turtleMove(steps);
                     break;
-                case "Display":
+                case "display":
                     fieldDisplay();
                     break;
                 default:
@@ -150,6 +171,5 @@ public class Problem01 {
                     break;
             }
         }
-
     }
 }
