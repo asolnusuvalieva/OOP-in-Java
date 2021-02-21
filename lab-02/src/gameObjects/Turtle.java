@@ -1,13 +1,13 @@
 package gameObjects;
 
 public class Turtle {
-    //Properties
+    //PROPERTIES
     private int x = 0, y = 0;
     private int dx = 1, dy = 0;
     private boolean isPenDown = false;
     private Field field;
 
-    //Getter and Setter methods
+    //Getter methods
     int getX(){
         return x;
     }
@@ -15,23 +15,24 @@ public class Turtle {
         return y;
     }
 
-    //YAGNI
+    //Setter methods (YAGNI)
     public void setX(int newX){
         if (Field.areCoordsInside(newX, y)){
             x = newX;
         }
     }
-    //YAGNI
     public void setY(int newY){
         if (Field.areCoordsInside(x, newY)){
             y = newY;
         }
     }
 
-    //Methods
+    //METHODS
+    //Initialization
     public Turtle(Field newField){
         field = newField;
     }
+
     public void putPenUp(){
         isPenDown = false;
     }
