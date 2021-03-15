@@ -1,10 +1,10 @@
 /*
 Naive Solution
  */
-public class ArrayListIntN {
+public class ArrayListInt {
     private int[] data;
 
-    ArrayListIntN(){
+    ArrayListInt(){
         data = new int[0];
     }
 
