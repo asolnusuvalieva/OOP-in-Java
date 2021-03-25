@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class URI1189 {
+public class URI1189Fall {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String s = scanner.next();
