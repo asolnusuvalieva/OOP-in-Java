@@ -1,7 +1,10 @@
 import java.util.Scanner;
 
 public class Sudoku {
-
+    public static void main(String[] args) {
+        int[][] solution = readASolution();
+        System.out.println(isValid(solution) ? "Valid solution" : "Invalid solution");
+    }
 
     public static int[][] readASolution (){
         Scanner scanner = new Scanner(System.in);
