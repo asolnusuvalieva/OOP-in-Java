@@ -25,5 +25,7 @@ public class TheSmallestFactor {
             Если убрать else, то логика условия будет правильной, но зато к factor добавится ненужный 1.
              */
         }
+
+        System.out.println("The smallest factor other than 1 for " + number + " is " + factor);
     }
 }
