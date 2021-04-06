@@ -27,12 +27,7 @@ public class Problem01 extends JFrame {
         add(toolbarPanel, "South");
     }
 
-
-
-
-
-
     public static void main(String[] args) {
-
+        new Problem01().setVisible(true); //set window visible and start an infinite loop
     }
 }
