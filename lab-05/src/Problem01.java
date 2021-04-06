@@ -8,6 +8,12 @@ public class Problem01 extends JFrame {
         setTitle("Sol: First GUI App");
         setDefaultCloseOperation(EXIT_ON_CLOSE); //request to close the window on tapping [x]
         setLayout(new BorderLayout());
+
+        JPanel mainPanel = new JPanel();
+        mainPanel.setBackground(Color.RED);
+
+        JPanel toolbarPanel = new JPanel();
+        toolbarPanel.setBackground(Color.DARK_GRAY);
     }
 
 
