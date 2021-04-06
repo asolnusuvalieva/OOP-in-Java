@@ -22,6 +22,9 @@ public class Problem01 extends JFrame {
         toolbarPanel.add(redButton);
         toolbarPanel.add(greenButton);
         toolbarPanel.add(blueButton);
+
+        add(mainPanel, "Center");
+        add(toolbarPanel, "South");
     }
 
 
