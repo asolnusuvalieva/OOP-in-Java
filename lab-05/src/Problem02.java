@@ -14,5 +14,9 @@ public class Problem02 extends JFrame {
 
         JPanel toolbarPanel = new JPanel();
         toolbarPanel.setBackground(Color.DARK_GRAY);
+
+        JButton redButton = new JButton("RED"); //a text on a button
+        JButton greenButton = new JButton("GREEN"); //a text on a button
+        JButton blueButton = new JButton("BLUE"); //a text on a button
     }
 }
