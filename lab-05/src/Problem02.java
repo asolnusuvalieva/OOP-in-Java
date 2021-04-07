@@ -3,7 +3,13 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 
 class ColorChanger extends MouseAdapter {
+    private final JPanel panel;
+    private final Color color;
 
+    ColorChanger(JPanel panel, Color color){
+        this.panel = panel;
+        this.color = color;
+    }
 }
 public class Problem02 extends JFrame {
     Problem02(){
