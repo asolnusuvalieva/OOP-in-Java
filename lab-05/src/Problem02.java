@@ -1,6 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 
+class ColorChanger extends MouseAdapter {
+
+}
 public class Problem02 extends JFrame {
     Problem02(){
         setSize(400, 400);
