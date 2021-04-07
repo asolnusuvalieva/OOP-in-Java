@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 class ColorChanger extends MouseAdapter {
     private final JPanel panel;
@@ -9,6 +10,10 @@ class ColorChanger extends MouseAdapter {
     ColorChanger(JPanel panel, Color color){
         this.panel = panel;
         this.color = color;
+    }
+
+    public void mouseClicked(MouseEvent e) {
+        panel.setBackground(color);
     }
 }
 public class Problem02 extends JFrame {
