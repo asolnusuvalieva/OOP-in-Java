@@ -23,6 +23,11 @@ public class URI1087{
         boolean thirdQ = x2 < x1 && y2 > y1; // [1, x1 -1], [y1 + 1, 8]
         boolean forthQ = x2 > x1 && y2 > y1; // [x1 + 1, 8], [y1 + 1, 8]
 
+        int startBoardY = -1;
+        int endBoardY = -1;
+        int startBoardX = -1;
+        int endBoardX = -1;
+
         return isSameDiagonal;
     }
 }
