@@ -1,9 +1,19 @@
 package batch6;
-/*
-A chess problem:
-given the position of a queen in an empty standard chess board (that is, an 8 x 8 board)
-how many moves are needed so that she reaches another given square in the board?
- */
-public class URI1087 {
 
+import java.util.Scanner;
+
+public class URI1087{
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+
+        while (!input.contains("0")) { // 1 <= X or Y <= 8
+            String[] parts = input.split(" ");
+
+            int x1 = Integer.parseInt(parts[0]);
+            int y1 = Integer.parseInt(parts[1]);
+            int x2 = Integer.parseInt(parts[2]);
+            int y2 = Integer.parseInt(parts[3]);
+        }
+    }
 }
