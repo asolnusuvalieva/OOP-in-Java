@@ -50,6 +50,16 @@ public class URI1087{
             endBoardX = 8;
         }
 
+        //Check individual points on the diagonal of that quarter
+        for(int boardY = startBoardY; boardY <= endBoardY; boardY++){
+            for(int boardX = startBoardX; boardX <= endBoardX; boardX++){
+                if(boardX == x2 && boardY == y2){
+                    isSameDiagonal = true;
+                    break;
+                }
+            }
+        }
+
         return isSameDiagonal;
     }
 }
