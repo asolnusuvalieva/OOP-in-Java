@@ -28,6 +28,28 @@ public class URI1087{
         int startBoardX = -1;
         int endBoardX = -1;
 
+        if(firstQ){
+            startBoardY = 1;
+            endBoardY = y1 - 1;
+            startBoardX = x1 + 1;
+            endBoardX = 8;
+        }else if(secondQ){
+            startBoardY = 1;
+            endBoardY = y1 - 1;
+            startBoardX = 1;
+            endBoardX = x1 - 1;
+        }else if(thirdQ){// [1, x1 -1], [y1 + 1, 8]
+            startBoardY = y1 + 1;
+            endBoardY = 8;
+            startBoardX = 1;
+            endBoardX = x1 - 1;
+        }else if(forthQ){// [x1 + 1, 8], [y1 + 1, 8]
+            startBoardY = y1 + 1;
+            endBoardY = 8;
+            startBoardX = x1 + 1;
+            endBoardX = 8;
+        }
+
         return isSameDiagonal;
     }
 }
