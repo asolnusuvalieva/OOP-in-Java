@@ -45,4 +45,8 @@ public class Problem03 extends JFrame {
         mainPanel.addMouseMotionListener(new CoordinateReporter(this));
         add(mainPanel, "Center");
     }
+
+    public static void main(String[] args) {
+        new Problem03().setVisible(true); //set window visible and start an infinite loop
+    }
 }
