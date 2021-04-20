@@ -39,5 +39,8 @@ public class Problem04 extends JFrame{
         setTitle("Fourth GUI App");
         setDefaultCloseOperation(EXIT_ON_CLOSE); //request to close the window on tapping [x]
         setLayout(new BorderLayout());
+
+        JPanel mainPanel = new Canvas();
+        mainPanel.setBackground(Color.BLACK);
     }
 }
