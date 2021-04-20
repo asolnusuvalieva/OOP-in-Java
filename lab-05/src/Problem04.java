@@ -45,4 +45,8 @@ public class Problem04 extends JFrame{
 
         add(mainPanel, "Center");
     }
+
+    public static void main(String[] args) {
+        new Problem04().setVisible(true); //set window visible and start an infinite loop
+    }
 }
