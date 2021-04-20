@@ -31,10 +31,9 @@ class Canvas extends JPanel {
             }
         }
     }
-
-
-
-
 }
 public class Problem04 {
+    Problem04(){
+
+    }
 }
