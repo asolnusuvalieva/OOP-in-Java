@@ -42,5 +42,7 @@ public class Problem04 extends JFrame{
 
         JPanel mainPanel = new Canvas();
         mainPanel.setBackground(Color.BLACK);
+
+        add(mainPanel, "Center");
     }
 }
