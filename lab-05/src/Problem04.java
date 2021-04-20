@@ -15,6 +15,21 @@ class Canvas extends JPanel {
         int screenFieldHeight = FIELD_HEIGHT * cellSize;
         int centeringShiftX = (int)((getWidth() - screenFieldWidth)/2f);
         int centeringShiftY = (int)((getHeight() - screenFieldHeight)/2f);
+
+        for(int i = 0; i < FIELD_HEIGHT; i++){
+            for(int j = 0; j < FIELD_WIDTH; j++){
+                int screenX = centeringShiftX + j * cellSize;
+                int screenY = centeringShiftY + i * cellSize;
+
+                if((i + j) % 2 == 0){ //even + even = even, odd + even = odd
+                    g.setColor(Color.BLACK);
+                }else{
+                    g.setColor(Color.WHITE);
+                }
+
+                g.fillRect(screenX,screenY, cellSize, cellSize);
+            }
+        }
     }
 
 
