@@ -30,25 +30,14 @@ public class URI1437 {
 
             String direction = "";
 
-            if(count > 0){
-                if (count % 4 == 0)
-                    direction = "N";
-                else if (count % 4 == 1)
-                    direction = "L"; //E
-                else if (count % 4 == 2)
-                    direction = "S";
-                else if (count % 4 == 3)
-                    direction = "O"; //W
-            }else{
-                if (count % 4 == 0)
-                    direction = "N";
-                else if (count % 4 == -1)
-                    direction = "O"; //W
-                else if (count % 4 == -2)
-                    direction = "S";
-                else if (count % 4 == -3)
-                    direction = "L"; //E
-            }
+            if (count % 4 == 0)
+                direction = "N";
+            else if (count % 4 == 1 || count % 4 == -3)
+                direction = "L"; //E
+            else if (count % 4 == 2 || count % 4 == -2)
+                direction = "S";
+            else if (count % 4 == 3 || count % 4 == -1)
+                direction = "O"; //W
 
             System.out.println(direction);
         }
