@@ -46,6 +46,11 @@ class Robot{
     int getY(){
         return y;
     }
+
+    void moveLeft(){
+        int nextX = x - 1;
+        int nextY = y;
+    }
 }
 public class Problem05 {
 }
