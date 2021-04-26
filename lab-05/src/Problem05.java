@@ -1,3 +1,6 @@
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 class Field{
     private static final int DEFAULT_FIELD_WIDTH = 10;
     private static final int DEFAULT_FIELD_HEIGHT = 10;
@@ -62,5 +65,19 @@ class Robot{
 
     }
 }
+
+class RobotController extends KeyAdapter {
+    private Robot robot;
+    RobotController(Robot robot){
+        this.robot = robot;
+    }
+
+    public void keyPressed(KeyEvent e){
+        switch (e.getKeyCode()){
+//            case KeyEvent:
+        }
+    }
+}
+
 public class Problem05 {
 }
