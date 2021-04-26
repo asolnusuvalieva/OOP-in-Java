@@ -19,6 +19,11 @@ class Field{
     int getHeight(){
         return height;
     }
+
+    boolean areCoordsInside(int x, int y){
+        return x >= 0 && x < width &&
+                y >= 0 && y < height;
+    }
 }
 public class Problem05 {
 }
