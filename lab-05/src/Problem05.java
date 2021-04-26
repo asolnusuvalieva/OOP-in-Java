@@ -39,6 +39,10 @@ class Robot{
         this.x = x;
         this.y = y;
     }
+
+    int getX(){
+        return x;
+    }
 }
 public class Problem05 {
 }
