@@ -25,5 +25,20 @@ class Field{
                 y >= 0 && y < height;
     }
 }
+
+class Robot{
+    private final Field field;
+    private int x, y;
+
+    Robot(Field field){
+        this(field, 0, 0);
+    }
+
+    Robot(Field field, int x, int y){
+        this.field = field;
+        this.x = x;
+        this.y = y;
+    }
+}
 public class Problem05 {
 }
