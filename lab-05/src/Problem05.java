@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -78,6 +80,45 @@ class RobotController extends KeyAdapter {
         }
     }
 }
+class RobotCanvas extends JPanel {
+    private static final float CELL_GAP = 0.85f;
+    private static Field field;
+    private static Robot robot;
 
+    public RobotCanvas(){
+        field = new Field();
+        robot = new Robot(field);
+
+        addKeyListener(new RobotController(robot));
+    }
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g); //let the parent fill the background with some color
+
+        int cellSize = (int)(Math.min(getWidth()/field.getWidth(), getHeight()/field.getHeight()) * CELL_GAP); //80% is just to have gaps around the board
+        int screenFieldWidth = field.getWidth() * cellSize;
+        int screenFieldHeight = field.getHeight() * cellSize;
+        int centeringShiftX = (int)((getWidth() - screenFieldWidth)/2f);
+        int centeringShiftY = (int)((getHeight() - screenFieldHeight)/2f);
+
+        //Field
+        for(int i = 0; i < field.getHeight(); i++){
+            for(int j = 0; j < field.getWidth(); j++){
+                int screenX = centeringShiftX + j * cellSize;
+                int screenY = centeringShiftY + i * cellSize;
+
+                if((i + j) % 2 == 0){ //even + even = even, odd + even = odd
+                    g.setColor(Color.BLACK);
+                }else{
+                    g.setColor(Color.WHITE);
+                }
+
+                g.fillRect(screenX,screenY, cellSize, cellSize);
+            }
+        }
+
+        //Robot
+    }
+}
 public class Problem05 {
 }
