@@ -51,6 +51,16 @@ class Robot{
         int nextX = x - 1;
         int nextY = y;
     }
+
+    void moveRight(){
+
+    }
+    void moveUp(){
+
+    }
+    void moveDown(){
+
+    }
 }
 public class Problem05 {
 }
