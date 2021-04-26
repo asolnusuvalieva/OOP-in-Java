@@ -16,6 +16,9 @@ class Field{
     int getWidth(){
         return width;
     }
+    int getHeight(){
+        return height;
+    }
 }
 public class Problem05 {
 }
