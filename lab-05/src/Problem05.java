@@ -43,6 +43,9 @@ class Robot{
     int getX(){
         return x;
     }
+    int getY(){
+        return y;
+    }
 }
 public class Problem05 {
 }
