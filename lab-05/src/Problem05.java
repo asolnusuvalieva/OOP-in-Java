@@ -120,5 +120,20 @@ class RobotCanvas extends JPanel {
         //Robot
     }
 }
-public class Problem05 {
+public class Problem05 extends JFrame {
+    Problem05(){
+        setSize(400, 400);
+        setLocationRelativeTo(null); //will center the window
+        setTitle("Fifth GUI App");
+        setDefaultCloseOperation(EXIT_ON_CLOSE); //request to close the window on tapping [x]
+        setLayout(new BorderLayout());
+
+        JPanel mainPanel = new RobotCanvas();
+        mainPanel.setBackground(Color.BLACK);
+        add(mainPanel, "Center");
+    }
+
+    public static void main(String[] args) {
+        new Problem05().setVisible(true); //set window visible and start an infinite loop
+    }
 }
