@@ -22,4 +22,11 @@ public class Rational {
         this.numerator = numerator;
         this.denominator = denominator;
     }
+
+    Rational add(Rational other){
+        return new Rational(
+                numerator.multiply(other.denominator).add(other.numerator.multiply(denominator)),
+                denominator.multiply(other.denominator));
+    }
+
 }
