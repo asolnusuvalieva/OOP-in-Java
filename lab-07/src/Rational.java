@@ -39,4 +39,9 @@ public class Rational {
         return new Rational(numerator.multiply(other.numerator),
                 denominator.multiply(other.denominator)); //Making it immutable
     }
+
+    Rational divide(Rational other){
+        return new Rational(numerator.multiply(other.denominator),
+                denominator.multiply(other.numerator)); //Making it immutable
+    }
 }
