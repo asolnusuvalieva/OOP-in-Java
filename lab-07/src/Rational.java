@@ -61,4 +61,26 @@ public class Rational {
         and a value greater than 0 if this Integer is numerically greater than the argument Integer
          */
     }
+
+    //Converting String into Rational
+    static Rational parseRational(String input){
+        Rational result;
+        int index = input.indexOf('/'); //if the search is failed, it'll return -1
+        try{
+            if(index == -1){
+                //"42" -> 42/1
+                result = new Rational(new BigInteger(input), BigInteger.ONE);
+            }else{
+                //"1/2" -> 1/2
+                BigInteger numerator = new BigInteger(input.substring(0, index));
+                BigInteger denominator = new BigInteger(input.substring(index + 1));
+                result = new Rational(numerator, denominator);
+            }
+        }catch (NumberFormatException e){
+            throw new NumberFormatException("Incorrect rational: " + input + "'");//Rethrowing an error with a better message
+            //This class doesn't handle anything
+        }
+
+        return result;
+    }
 }
