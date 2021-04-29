@@ -48,4 +48,17 @@ public class Rational {
     public String toString(){
         return denominator.equals(BigInteger.ONE) ? numerator.toString() : numerator + "/" + denominator;
     }
+
+    public int compareTo(Rational other){
+        return numerator.multiply(other.denominator).compareTo(denominator.multiply(other.numerator));
+        /*
+        They just have the same denominator, using the same trick that we used for subtraction/addition
+         */
+        /*
+        Integer.compare():
+        the value 0 if this Integer is equal to the argument Integer;
+        a value less than 0 if this Integer is numerically less than the argument Integer;
+        and a value greater than 0 if this Integer is numerically greater than the argument Integer
+         */
+    }
 }
