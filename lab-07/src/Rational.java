@@ -44,4 +44,8 @@ public class Rational {
         return new Rational(numerator.multiply(other.denominator),
                 denominator.multiply(other.numerator)); //Making it immutable
     }
+
+    public String toString(){
+        return denominator.equals(BigInteger.ONE) ? numerator.toString() : numerator + "/" + denominator;
+    }
 }
