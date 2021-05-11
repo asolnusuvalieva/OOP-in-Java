@@ -14,18 +14,12 @@ public class URI1553 {
         int frequentK;
 
         while ((numberOfQs = scanner.nextInt()) != 0 && (frequentK = scanner.nextInt()) != 0){
-            int[] questions = new int[numberOfQs];
+            int[] allQsIdentifiersFrequency = new int[1000];
 
             //Initialization question identifiers
             for(int i = 0; i < numberOfQs; i++){
-                questions[i] = scanner.nextInt();
-            }
-
-            int[] allQsIdentifiersFrequency = new int[1000];
-            //Going thorough each question
-            for(int i = 0; i < numberOfQs; i++){
-                int currentQn = questions[i]; //Accessing a question identifier
-                allQsIdentifiersFrequency[currentQn - 1]++;
+                int input = scanner.nextInt();
+                allQsIdentifiersFrequency[input - 1]++;
             }
 
             int FAQ = 0;
