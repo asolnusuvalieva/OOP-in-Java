@@ -10,21 +10,27 @@ public class Problem01 extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE); //What to do by default when we close the window? //it'll stop the program
         setLayout(new BorderLayout()); //Choose a layout engine
 
+        /* Red Panel */
         JPanel mainPanel = new JPanel();
         mainPanel.setBackground(Color.RED);
+        /* Adding the panel to the window */
         add(mainPanel, "Center");
 
+        /* Creating Buttons */
         JButton redButton = new JButton("RED"); //a button with a text/name
         JButton greenButton = new JButton("GREEN"); //a button with a text/name
         JButton blueButton = new JButton("BLUE"); //a button with a text/name
 
+        /* Toolbar Panel */
         JPanel toolbarPanel = new JPanel();
         toolbarPanel.setBackground(Color.DARK_GRAY);
 
+        /* Adding buttons to the panel */
         toolbarPanel.add(redButton);
         toolbarPanel.add(greenButton);
         toolbarPanel.add(blueButton);
 
+        /* Adding the panel to the window */
         add(toolbarPanel, "South");
     }
 
