@@ -63,10 +63,10 @@ public class Main {
                 fieldHeight = FIELD_HEIGHT_FOR_EXPERT;
         }
 
-        boolean[][] uncovered = new boolean[fieldHeight][fieldWidth]; //default values = false
+        boolean[][] uncoveredField = new boolean[fieldHeight][fieldWidth]; //default values = false
         int[][] field = new int[fieldHeight][fieldWidth];
 
-        present(field, uncovered);
+        present(field, uncoveredField);
 
         int[] selectedCoords = {0, 0};
         try{
@@ -114,9 +114,36 @@ public class Main {
             }
         }
 
-
         /* Flood Fill Algorithm */
-        present_debugger(field);
+        floodUncover(selectedX, selectedY, field, uncoveredField);
+
+        boolean lost = false;
+        do{
+            present(field, uncoveredField);
+
+            try{
+                selectedCoords = readCoordinates(scanner, 0, fieldWidth, 0, fieldHeight);
+            }catch (EOFException EOF){
+                System.exit(0); //We exit only if user decides to finish the game
+            }
+            selectedX = selectedCoords[0];
+            selectedY = selectedCoords[1];
+
+            int cell = field[selectedY][selectedX];
+            if(cell == MINE_VALUE){
+                uncoveredField[selectedY][selectedX] = true;
+                lost = true;
+            }else if(cell == EMPTY_VALUE){
+                floodUncover(selectedX, selectedY, field, uncoveredField);
+            }else{
+                uncoveredField[selectedY][selectedX] = true;
+            }
+
+            //TODO: check we won or not?
+        }while (!lost);
+
+        present(field, uncoveredField);
+        //TODO: Print some message, won or lost...
     }
 
     private static int readDifficulty(Scanner scanner) throws EOFException{
