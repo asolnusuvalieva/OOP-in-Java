@@ -1,0 +1,6 @@
+Three Levels of Difficulty:
+1) Beginner (8x8, 10 mines)
+2) Intermediate (16x16, 40 mines)
+3) Expert (24x24, 99)
+
+We have to use `Flood Fill` algorithm in order to open/uncover all *needed* empty cells.
