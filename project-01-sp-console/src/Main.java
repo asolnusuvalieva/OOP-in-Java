@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 class EOFException extends Exception{
     public EOFException(String message){
@@ -19,7 +18,7 @@ public class Main {
     private static final int FIELD_HEIGHT_FOR_EXPERT = 24;
 
     private static final String MINE_CELL = "💣";
-    private static final String EMPTY_CELL = "🟨";
+    private static final String EMPTY_CELL = "⬜️";
     private static final String COVERED_CELL = "🟦";
 
     private static final int MINE_VALUE = -1;
@@ -27,13 +26,14 @@ public class Main {
 
     //It's to analyze 8 cells around one cell
     private static final int[][] SHIFTS = {
-            /* Y axis */ {-1, -1, -1,  0, 0,  0,  1, 1, 1},
-           /* X axis */  {-1,  0,  1,  0, -1,  1, -1, 0, 1}
+            /* Y axis */ {-1, -1, -1,  0,  0,  0,  1,  1, 1},
+           /* X axis */  {-1,  0,  1,  -1, 0,  1, -1,  0, 1}
     };
 
 
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Minesweeper\n");
 
         int difficulty = 1; //default value to avoid IDE warning
         try{
@@ -45,6 +45,7 @@ public class Main {
         int mines;
         int fieldWidth;
         int fieldHeight;
+        int totalCellsToUncover;
         switch (difficulty){
             case 1:
                 mines = MINES_FOR_BEGINNER;
@@ -62,9 +63,10 @@ public class Main {
                 fieldWidth = FIELD_WIDTH_FOR_EXPERT;
                 fieldHeight = FIELD_HEIGHT_FOR_EXPERT;
         }
+        totalCellsToUncover = fieldHeight * fieldWidth - mines;
 
-        boolean[][] uncoveredField = new boolean[fieldHeight][fieldWidth]; //default values = false
         int[][] field = new int[fieldHeight][fieldWidth];
+        boolean[][] uncoveredField = new boolean[fieldHeight][fieldWidth]; //default values = false
 
         present(field, uncoveredField);
 
@@ -115,10 +117,10 @@ public class Main {
         }
 
         /* Flood Fill Algorithm */
-        floodUncover(selectedX, selectedY, field, uncoveredField);
+        totalCellsToUncover -= floodUncover(selectedX, selectedY, field, uncoveredField);
 
-        boolean lost = false;
-        do{
+        boolean lost = false, won = totalCellsToUncover == 0;
+        while(!lost && !won){
             present(field, uncoveredField);
 
             try{
@@ -134,16 +136,23 @@ public class Main {
                 uncoveredField[selectedY][selectedX] = true;
                 lost = true;
             }else if(cell == EMPTY_VALUE){
-                floodUncover(selectedX, selectedY, field, uncoveredField);
+                totalCellsToUncover -= floodUncover(selectedX, selectedY, field, uncoveredField);
             }else{
                 uncoveredField[selectedY][selectedX] = true;
+                totalCellsToUncover--;
             }
 
-            //TODO: check we won or not?
-        }while (!lost);
+            if(totalCellsToUncover == 0){
+                won = true;
+            }
+        };
 
-        present(field, uncoveredField);
-        //TODO: Print some message, won or lost...
+        present_debugger(field);
+        if (lost) {
+            System.out.println("Bad luck, the mine went off.");
+        } else {
+            System.out.println("You won! The field was cleared.");
+        }
     }
 
     private static int readDifficulty(Scanner scanner) throws EOFException{
@@ -181,7 +190,7 @@ public class Main {
             }
 
             try{
-                String[] rawInput = scanner.nextLine().split(" ");
+                String[] rawInput = scanner.nextLine().trim().split("\\s+");;
                 if(rawInput.length != 2){
                     throw new NumberFormatException();
                 }
@@ -212,23 +221,7 @@ public class Main {
     }
 
     private static void present_debugger (int[][] field){
-        int fieldHeight = field.length;
-        int fieldWidth = field[0].length;
-
-        for(int y = 0; y < fieldHeight; y++){
-            for(int x = 0; x < fieldWidth; x++){
-                int cell = field[y][x];
-                if(cell == MINE_VALUE){
-                    System.out.print(MINE_CELL);
-                }else if(cell == EMPTY_VALUE){
-                    System.out.print(EMPTY_CELL);
-                }else{ //Some number
-                    String numberEmoji = turnNumberIntoEmoji(cell);
-                    System.out.print(numberEmoji);
-                }
-            }
-            System.out.println(); //Go to the next line
-        }
+        present(field, null);
     }
     private static void present(int[][] field, boolean[][] uncoveredField){
         int fieldHeight = field.length;
@@ -236,7 +229,7 @@ public class Main {
 
         for(int y = 0; y < fieldHeight; y++){
             for(int x = 0; x < fieldWidth; x++){
-                if(uncoveredField[y][x]){ //if the cell is open
+                if(uncoveredField == null || uncoveredField[y][x]){ //if the cell is open
                     int cell = field[y][x];
                     if(cell == MINE_VALUE){
                         System.out.print(MINE_CELL);
@@ -254,7 +247,9 @@ public class Main {
         }
     }
 
-    private static void floodUncover(int selectedX, int selectedY, int[][] field, boolean[][] uncoveredField){
+    private static int floodUncover(int selectedX, int selectedY, int[][] field, boolean[][] uncoveredField){
+        int uncoveredCells = 0;
+
         //Uncovering empty cells and stop when meeting non-zero cells
         uncoveredField[selectedY][selectedX] = true;
 
@@ -263,11 +258,15 @@ public class Main {
             int neighbourX = selectedX + SHIFTS[1][i];
             if(areCoordsInside(field, neighbourX, neighbourY) && !uncoveredField[neighbourY][neighbourX]){
                 uncoveredField[neighbourY][neighbourX] = true;
+                uncoveredCells++;
+
                 if(field[neighbourY][neighbourX] == EMPTY_VALUE){
-                    floodUncover(neighbourX, neighbourY, field, uncoveredField);
+                    uncoveredCells += floodUncover(neighbourX, neighbourY, field, uncoveredField);
                 }
             }
         }
+
+        return uncoveredCells;
     }
 
     private static String turnNumberIntoEmoji(int number){
