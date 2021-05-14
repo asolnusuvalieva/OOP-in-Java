@@ -227,8 +227,20 @@ public class Main {
         }
     }
 
-    private static void floodFill(int selectedX, int selectedY){
+    private static void floodUncover(int selectedX, int selectedY, int[][] field, boolean[][] uncoveredField){
+        //Uncovering empty cells and stop when meeting non-zero cells
+        uncoveredField[selectedY][selectedX] = true;
 
+        for(int i = 0; i < SHIFTS[0].length; i++) {
+            int neighbourY = selectedY + SHIFTS[0][i];
+            int neighbourX = selectedX + SHIFTS[1][i];
+            if(areCoordsInside(field, neighbourX, neighbourY) && !uncoveredField[neighbourY][neighbourX]){
+                uncoveredField[neighbourY][neighbourX] = true;
+                if(field[neighbourY][neighbourX] == EMPTY_VALUE){
+                    floodUncover(neighbourX, neighbourY, field, uncoveredField);
+                }
+            }
+        }
     }
 
     private static String turnNumberIntoEmoji(int number){
