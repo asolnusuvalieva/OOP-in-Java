@@ -19,18 +19,8 @@ public class Field {
     private final int width;
     private final int height;
 
-    private int[][] field;
+    private final int[][] field;
     public boolean[][] uncoveredField; //TODO: Should it stay 'public'?
-
-    /* Methods */
-    public Field(GameLevel gameLevel){
-        mines = gameLevel.getMINES();
-        width = gameLevel.getFIELD_WIDTH();
-        height = gameLevel.getFIELD_HEIGHT();
-
-        field = new int[height][width];
-        uncoveredField = new boolean[height][width]; //default values = false
-    }
 
     /* Getters */
     public int getWidth() {
@@ -52,9 +42,18 @@ public class Field {
         return field[y][x];
     }
 
+    /* Methods */
+    public Field(GameLevel gameLevel){
+        mines = gameLevel.getMINES();
+        width = gameLevel.getFIELD_WIDTH();
+        height = gameLevel.getFIELD_HEIGHT();
 
-    public void present_debugger (){
-        uncoveredField = null; //TODO: Should I make it 'null'?
+        field = new int[height][width];
+        uncoveredField = new boolean[height][width]; //default values = false; all cells are closed
+    }
+
+    public void presentWinOrLost (){
+        uncoveredField = null;
         present();
     }
 
@@ -79,7 +78,6 @@ public class Field {
         }
     }
 
-
     public void putMines(int selectedX, int selectedY){
         ArrayList<Integer[]> potentialMinePlaces = findPotentialMinePlaces(selectedX, selectedY);
 
@@ -95,14 +93,14 @@ public class Field {
             for(int j = 0; j < SHIFTS[0].length; j++) {
                 int neighbourY = mineY + SHIFTS[0][j];
                 int neighbourX = mineX + SHIFTS[1][j];
-                if(areCoordsInside(field, neighbourX, neighbourY) && field[neighbourY][neighbourX] != MINE_VALUE){
+                if(areCoordsInside(neighbourX, neighbourY) && field[neighbourY][neighbourX] != MINE_VALUE){
                     field[neighbourY][neighbourX]++;
                 }
             }
         }
     }
 
-    int floodUncover(int selectedX, int selectedY){
+    public int floodUncover(int selectedX, int selectedY){
         int uncoveredCells = 0;
 
         //Uncovering empty cells and stop when meeting non-zero cells
@@ -111,7 +109,7 @@ public class Field {
         for(int i = 0; i < SHIFTS[0].length; i++) {
             int neighbourY = selectedY + SHIFTS[0][i];
             int neighbourX = selectedX + SHIFTS[1][i];
-            if(areCoordsInside(field, neighbourX, neighbourY) && !uncoveredField[neighbourY][neighbourX]){
+            if(areCoordsInside(neighbourX, neighbourY) && !uncoveredField[neighbourY][neighbourX]){
                 uncoveredField[neighbourY][neighbourX] = true;
                 uncoveredCells++;
 
@@ -145,11 +143,8 @@ public class Field {
         return potentialMinePlaces;
     }
 
-    private static boolean areCoordsInside(int[][] field, int x, int y){
-        int fieldHeight = field.length;
-        int fieldWidth = field[0].length;
-
-        return x >= 0 && x < fieldWidth && y >= 0 && y < fieldHeight;
+    private boolean areCoordsInside(int x, int y){
+        return x >= 0 && x < width && y >= 0 && y < height;
     }
 
     private static String turnNumberIntoEmoji(int number){
