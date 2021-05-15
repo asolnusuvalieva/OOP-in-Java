@@ -1,0 +1,17 @@
+# Main class:
+PApplet is class that contains bunch of useful methods.
+The very first method which will be called after instantiating PApplet is settings() method.
+
+## Mouse
+mouseClicked()
+mouseMoved()
+mousePressed()
+mouseReleased()
+
+# PButton Class:
+Images in Processing stored in the PImage class.
+
+# Using images in Processing
+If you want to use images in Processing, you have to place them in `data` folder.
+
+When using colors, don'' forget to write '0xff' in front
