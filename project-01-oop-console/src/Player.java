@@ -1,10 +1,37 @@
 import java.util.Scanner;
 
 public class Player {
-    public boolean lost = false;
-    public boolean won;
+    private boolean lost = false;
+    private boolean won;
     public int totalCellsToUncover;
 
+
+    /* Getters */
+    public boolean isLost() {
+        return lost;
+    }
+
+    public boolean isWon() {
+        return won;
+    }
+
+    public int getTotalCellsToUncover() {
+        return totalCellsToUncover;
+    }
+
+    /* Setters */
+
+    public void setLost(boolean lost) {
+        this.lost = lost;
+    }
+
+    public void setWon(boolean won) {
+        this.won = won;
+    }
+
+    public void setTotalCellsToUncover(int totalCellsToUncover) {
+        this.totalCellsToUncover = totalCellsToUncover;
+    }
 
     public Player(GameLevel gameLevel){
         totalCellsToUncover = gameLevel.getFIELD_HEIGHT() * gameLevel.getFIELD_WIDTH() - gameLevel.getMINES();
