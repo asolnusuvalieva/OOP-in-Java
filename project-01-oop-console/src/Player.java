@@ -5,7 +5,6 @@ public class Player {
     private boolean won;
     public int totalCellsToUncover;
 
-
     /* Getters */
     public boolean isLost() {
         return lost;
@@ -15,22 +14,13 @@ public class Player {
         return won;
     }
 
-    public int getTotalCellsToUncover() {
-        return totalCellsToUncover;
-    }
-
     /* Setters */
-
     public void setLost(boolean lost) {
         this.lost = lost;
     }
 
     public void setWon(boolean won) {
         this.won = won;
-    }
-
-    public void setTotalCellsToUncover(int totalCellsToUncover) {
-        this.totalCellsToUncover = totalCellsToUncover;
     }
 
     public Player(GameLevel gameLevel){
