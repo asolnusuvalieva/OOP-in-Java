@@ -1,11 +1,23 @@
 import java.util.Scanner;
 
 public class Player {
+    private int selectedX;
+    private int selectedY;
+
     private boolean lost = false;
     private boolean won;
     public int totalCellsToUncover;
 
     /* Getters */
+
+    public int getSelectedX() {
+        return selectedX;
+    }
+
+    public int getSelectedY() {
+        return selectedY;
+    }
+
     public boolean isLost() {
         return lost;
     }
@@ -24,6 +36,8 @@ public class Player {
     }
 
     public Player(GameLevel gameLevel){
+        selectedX = 0; //Just default values
+        selectedY = 0; //Just default values
         totalCellsToUncover = gameLevel.getFIELD_HEIGHT() * gameLevel.getFIELD_WIDTH() - gameLevel.getMINES();
         won = totalCellsToUncover == 0;
     }
@@ -54,7 +68,7 @@ public class Player {
         }while (true);
     }
 
-    public static int[] enterCoordinates(Scanner scanner, int minX, int maxX, int minY, int maxY) throws EOFException{
+    public void enterCoordinates(Scanner scanner, int minX, int maxX, int minY, int maxY) throws EOFException{
         do{
             System.out.println("Select a cell (x, y): ");
 
@@ -79,7 +93,9 @@ public class Player {
                     throw new NumberFormatException();
                 }
 
-                return new int[] {x, y};
+                selectedX = x;
+                selectedY = y;
+                return;
             }catch (NumberFormatException e){
                 System.err.print("Invalid coordinates. Try again (or Command+D to exit).");
             }
