@@ -23,9 +23,9 @@ public class PButton {
     private MouseClickListener clickListener = () -> {};
     private final PApplet applet;
 
-    private int backgroundColor = 0xff383838; // DARK-GRAY
-    private int backgroundColorHover = 0xff6e6e6e; // Lighter color
-    private int backgroundColorActive = 0xff6e6e6e; // Darker color : when pressed
+    private int backgroundColor = PApplet.unhex("5b4df7"); // DARK-GRAY
+    private int backgroundColorHover = PApplet.unhex("9d95ed"); // Lighter color
+    private int backgroundColorActive = PApplet.unhex("322b75"); // Darker color : when pressed
 
     private PImage backgroundImage = null;
     private PImage backgroundImageHover = null;
@@ -201,7 +201,7 @@ public class PButton {
             currentState = State.NORMAL;
         }
     }
-    void mouseMoved(MouseEvent event) {
+    void mouseMoved() {
         if(!enabled) return;
 
         if(areMouseCoordsInside(applet.mouseX, applet.mouseY)){
