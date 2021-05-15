@@ -1,10 +1,9 @@
 import java.util.Scanner;
 
 public class Main {
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Minesweeper\n");
+        System.out.println("Welcome to the Minesweeper game!\n");
 
         int difficulty = 1; //default value to avoid IDE warning
         try{
@@ -18,34 +17,30 @@ public class Main {
         Field field = new Field(gameLevel);
         field.present();
 
-        int[] selectedCoords = {0, 0}; //default value to avoid IDE warning
         try{
-            selectedCoords = Player.enterCoordinates(scanner, 0, field.getWidth(), 0, field.getHeight());
+            player.enterCoordinates(scanner, 0, field.getWidth(), 0, field.getHeight());
         }catch (EOFException EOF){
             System.exit(0); //We exit only if user decides to finish the game
         }
 
-        int selectedX = selectedCoords[0];
-        int selectedY = selectedCoords[1];
+        field.putMines(player.getSelectedX(), player.getSelectedY());
+        player.totalCellsToUncover -= field.floodUncover(player.getSelectedX(), player.getSelectedY());
 
-        field.putMines(selectedX, selectedY);
-        player.totalCellsToUncover -= field.floodUncover(selectedX, selectedY);
-
-        while(!player.lost && !player.won){
+        while(!player.isLost() || !player.isWon()){
             field.present();
 
             try{
-                selectedCoords = Player.enterCoordinates(scanner, 0, field.getWidth(), 0, field.getHeight());
+                player.enterCoordinates(scanner, 0, field.getWidth(), 0, field.getHeight());
             }catch (EOFException EOF){
                 System.exit(0); //We exit only if user decides to finish the game
             }
-            selectedX = selectedCoords[0];
-            selectedY = selectedCoords[1];
-
+            int selectedX = player.getSelectedX();
+            int selectedY = player.getSelectedY();
             int cell = field.getCell(selectedX, selectedY);
+
             if(cell == Field.getMineValue()){
                 field.uncoveredField[selectedY][selectedX] = true;
-                player.lost = true;
+                player.setLost(true);
             }else if(cell == Field.getEmptyValue()){
                 player.totalCellsToUncover -= field.floodUncover(selectedX, selectedY);
             }else{
@@ -54,15 +49,15 @@ public class Main {
             }
 
             if(player.totalCellsToUncover == 0){
-                player.won = true;
+                player.setWon(true);
             }
         }
 
-        field.present_debugger();
-        if (player.lost) {
-            System.out.println("Bad luck, the mine went off.");
+        field.presentWinOrLost();
+        if (player.isLost()) {
+            System.out.println("☹️\nYou lost! That is fine! Play again!");
         } else {
-            System.out.println("You won! The field was cleared.");
+            System.out.println("🎉🎉🎉\nYou won! Play the harder level!");
         }
     }
 }
