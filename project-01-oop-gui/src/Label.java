@@ -1,4 +1,3 @@
-package PButton;
 public class Label {
     private final String text; //text on the top of the button
     private final int fontSize = 16;

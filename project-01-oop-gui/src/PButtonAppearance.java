@@ -1,10 +1,9 @@
-package PButton;
 import processing.core.PImage;
 
 public class PButtonAppearance {
-    private int backgroundColor = 0xfff51d7e; // Dark
-    private int backgroundColorHover = 0xffff5ea6; // Light
-    private int backgroundColorActive = 0xffab004d; // Very Dark
+    private int backgroundColor = 0xff575656; // Dark
+    private int backgroundColorHover = 0xff6e6e6e; // Light
+    private int backgroundColorActive = 0xff3b3b3b; // Very Dark
 
     private PImage backgroundImage = null;
     private PImage backgroundImageHover = null;

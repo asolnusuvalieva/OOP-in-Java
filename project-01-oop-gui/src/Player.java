@@ -1,6 +1,5 @@
 import java.util.Scanner;
-
-public class Player {
+public class Player implements MouseClickListener {
     private int selectedX;
     private int selectedY;
 
@@ -18,6 +17,14 @@ public class Player {
         return selectedY;
     }
 
+    public void setSelectedX(int selectedX) {
+        this.selectedX = selectedX;
+    }
+
+    public void setSelectedY(int selectedY) {
+        this.selectedY = selectedY;
+    }
+
     public boolean isLost() {
         return lost;
     }
@@ -25,6 +32,7 @@ public class Player {
     public boolean isWon() {
         return won;
     }
+
 
     /* Setters */
     public void setLost(boolean lost) {
@@ -36,10 +44,15 @@ public class Player {
     }
 
     public Player(GameLevel gameLevel){
-        selectedX = 0; //Just default values
-        selectedY = 0; //Just default values
         totalCellsToUncover = gameLevel.getFIELD_HEIGHT() * gameLevel.getFIELD_WIDTH() - gameLevel.getMINES();
         won = totalCellsToUncover == 0;
+    }
+
+    @Override
+    public void mouseClicked(int selectedCellX, int selectedCellY) {
+        setSelectedX(selectedCellX);
+        setSelectedY(selectedCellY);
+        System.out.println("This cell (" + selectedCellX + ", " + selectedCellY + ") was clicked!");
     }
 
     public static int chooseDifficulty(Scanner scanner) throws EOFException{

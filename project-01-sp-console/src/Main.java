@@ -120,7 +120,7 @@ public class Main {
         totalCellsToUncover -= floodUncover(selectedX, selectedY, field, uncoveredField);
 
         boolean lost = false, won = totalCellsToUncover == 0;
-        while(!lost && !won){
+        while(!lost || !won){
             present(field, uncoveredField);
 
             try{

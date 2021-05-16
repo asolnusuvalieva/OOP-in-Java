@@ -1,5 +1,4 @@
 import processing.core.PApplet;
-import processing.core.PImage;
 
 interface MouseClickListener{
     void mouseClicked();
@@ -19,11 +18,11 @@ public class PButton {
     private State currentState = State.NORMAL;
     public PButtonAppearance appearance = new PButtonAppearance(); //TODO: Stay 'public'?
     private boolean enabled = true; //can and can NOT interact with the button
-    private final int identifier; //to count cells in 2D array
+    private final int[] identifier; //to count cells in 2D array
     private MouseClickListener clickListener = () -> {}; //Пусть кто то другой решает, что делать если нажали на кнопку
 
     // Methods
-    PButton(PApplet applet, float x, float y, float width, float height, String label, int identifier){
+    PButton(PApplet applet, float x, float y, float width, float height, String label, int[] identifier){
         this.applet = applet;
         this.x = x;
         this.y = y;

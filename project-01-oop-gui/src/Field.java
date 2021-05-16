@@ -1,10 +1,12 @@
+import processing.core.PApplet;
+import processing.core.PImage;
+
 import java.util.ArrayList;
 
 public class Field {
     private static final String MINE_CELL = "💣";
     private static final String EMPTY_CELL = "⬜️";
     private static final String COVERED_CELL = "🟦";
-
 
     private static final int MINE_VALUE = -1;
     private static final int EMPTY_VALUE = 0;
@@ -26,18 +28,15 @@ public class Field {
     public int getWidth() {
         return width;
     }
-
     public int getHeight() {
         return height;
     }
     public static int getMineValue() {
         return MINE_VALUE;
     }
-
     public static int getEmptyValue() {
         return EMPTY_VALUE;
     }
-
     public int getCell(int x, int y){
         return field[y][x];
     }
@@ -52,29 +51,29 @@ public class Field {
         uncoveredField = new boolean[height][width]; //default values = false; all cells are closed
     }
 
-    public void presentWinOrLost (){
+    public void presentWinOrLost (PApplet applet, PButton[][] buttons){
         uncoveredField = null;
-        present();
+        present(applet, buttons);
     }
 
-    public void present(){
+    public void present(PApplet applet, PButton[][] buttons){
         for(int y = 0; y < height; y++){
             for(int x = 0; x < width; x++){
                 if(uncoveredField == null || uncoveredField[y][x]){ //if the cell is open
+                    System.out.println("It should not happen");
                     int cell = field[y][x];
                     if(cell == MINE_VALUE){
-                        System.out.print(MINE_CELL);
-                    }else if(cell == EMPTY_VALUE){
-                        System.out.print(EMPTY_CELL);
-                    }else{ //Some number
-                        String numberEmoji = turnNumberIntoEmoji(cell);
-                        System.out.print(numberEmoji);
+                        buttons[y][x].appearance.setBackgroundColor(0xffff0000); //red
+                        buttons[y][x].appearance.setIcon(applet.loadImage("mine.png"));
+//                        System.out.print(MINE_CELL);
+                    }else if(cell != 0){ //Some number
+                        buttons[y][x].setLabel(new Label(String.valueOf(cell)));
                     }
-                }else{
-                    System.out.print(COVERED_CELL);
                 }
+
+                buttons[y][x].draw();
+//              System.out.print(COVERED_CELL);
             }
-            System.out.println(); //Go to the next line
         }
     }
 
@@ -145,27 +144,5 @@ public class Field {
 
     private boolean areCoordsInside(int x, int y){
         return x >= 0 && x < width && y >= 0 && y < height;
-    }
-
-    private static String turnNumberIntoEmoji(int number){
-        switch (number){
-            case 1:
-                return "1️⃣";
-            case 2:
-                return "2️⃣";
-            case 3:
-                return "3️⃣";
-            case 4:
-                return "4️⃣";
-            case 5:
-                return "5️⃣";
-            case 6:
-                return "6️⃣";
-            case 7:
-                return "7️⃣";
-            case 8:
-            default:
-                return "8️⃣";
-        }
     }
 }

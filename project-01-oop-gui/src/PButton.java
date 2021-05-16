@@ -1,11 +1,8 @@
-package PButton;
-
 import processing.core.PApplet;
-import processing.core.PImage;
-
 interface MouseClickListener{
-    void mouseClicked();
+    void mouseClicked(int selectedCellX, int selectedCellY);
 }
+
 public class PButton {
     // Data Fields
     enum State{
@@ -21,11 +18,11 @@ public class PButton {
     private State currentState = State.NORMAL;
     public PButtonAppearance appearance = new PButtonAppearance(); //TODO: Stay 'public'?
     private boolean enabled = true; //can and can NOT interact with the button
-    private final int identifier; //to count cells in 2D array
-    private MouseClickListener clickListener = () -> {}; //Пусть кто то другой решает, что делать если нажали на кнопку
+    private final int[] identifier; //to count cells in 2D array
+    private MouseClickListener clickListener; //Пусть кто то другой решает, что делать если нажали на кнопку
 
     // Methods
-    PButton(PApplet applet, float x, float y, float width, float height, String label, int identifier){
+    public PButton(PApplet applet, float x, float y, float width, float height, String label, int[] identifier, MouseClickListener clickListener){
         this.applet = applet;
         this.x = x;
         this.y = y;
@@ -33,19 +30,20 @@ public class PButton {
         this.height = height;
         this.label = new Label(label);
         this.identifier = identifier;
+        this.clickListener = clickListener;
     }
 
     // Reacting to mouse manipulations
-    void mouseClicked() {
+    public void mouseClicked() {
         if(!enabled) return;
 
         //mouse pressed AND released, and the mouse didn't move too far
         if(areMouseCoordsInside(applet.mouseX, applet.mouseY)){
-            clickListener.mouseClicked();
+            clickListener.mouseClicked(identifier[0], identifier[1]); //x, y
         }
     }
 
-    void mousePressed() {
+    public void mousePressed() {
         if(!enabled) return;
 
         if(areMouseCoordsInside(applet.mouseX, applet.mouseY)){
@@ -53,7 +51,7 @@ public class PButton {
         }
     }
 
-    void mouseReleased() {
+    public void mouseReleased() {
         if(!enabled) return;
         if(areMouseCoordsInside(applet.mouseX, applet.mouseY)){
             currentState = State.HOVER;
@@ -61,7 +59,7 @@ public class PButton {
             currentState = State.NORMAL;
         }
     }
-    void mouseMoved() {
+    public void mouseMoved() {
         if(!enabled) return;
 
         if(areMouseCoordsInside(applet.mouseX, applet.mouseY)){
@@ -72,7 +70,7 @@ public class PButton {
         }
     }
 
-    void draw(){
+    public void draw(){
         //Respective behavior in corresponding states
         if(currentState == State.NORMAL){
             applet.fill(appearance.getBackgroundColor());
@@ -216,7 +214,7 @@ public class PButton {
         return clickListener;
     }
 
-    void setClickListener(MouseClickListener clickListener) {
+    public void setClickListener(MouseClickListener clickListener) {
         this.clickListener = clickListener;
     }
 }

@@ -18,10 +18,10 @@ public class Main extends PApplet {
         float button1X = width/2f - buttonWidth/2f;
         float button1Y = width/2f - buttonWidth/2f;
 
-        PButton button1 = new PButton(this, button1X, button1Y, buttonWidth, buttonHeight, "1");
-        button1.setBackgroundImage(loadImage("normal.png"));
-        button1.setBackgroundImageHover(loadImage("hover.png"));
-        button1.setBackgroundImageActive(loadImage("active.png"));
+        PButton button1 = new PButton(this, button1X, button1Y, buttonWidth, buttonHeight, "1", new int[]{0});
+//        button1.appearance.setBackgroundImage(loadImage("normal.png"));
+//        button1.appearance.setBackgroundImageHover(loadImage("hover.png"));
+//        button1.appearance.setBackgroundImageActive(loadImage("active.png"));
         button1.setClickListener(() -> System.out.println("Button1 was clicked!"));
 
         buttons.add(button1);
