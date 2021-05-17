@@ -1,0 +1,11 @@
+Problems I have now:
+- Problems with animation (the right display of the buttons)
+
+/*.
+В первый раз, гарантированно, что floodUncover() откроет только empty cells, а вот уже в след. раз будет проверяться -
+если мина, но сразу проигрыш.
+
+Моя последняя нажатая мина выходила с темным фоном, когда остальные - нормально.
+Причина в том, что остальные находятся в нормальном состоянии и для них settingBackground to red WORKS while this is in the Active
+mode, and when drawing, activeBackground is applied.
+*/
