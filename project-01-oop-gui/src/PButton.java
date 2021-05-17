@@ -1,6 +1,6 @@
 import processing.core.PApplet;
 interface MouseClickListener{
-    void mouseClicked(int selectedCellX, int selectedCellY);
+    void mouseClicked(PApplet applet, int selectedCellX, int selectedCellY);
 }
 
 public class PButton {
@@ -39,7 +39,7 @@ public class PButton {
 
         //mouse pressed AND released, and the mouse didn't move too far
         if(areMouseCoordsInside(applet.mouseX, applet.mouseY)){
-            clickListener.mouseClicked(identifier[0], identifier[1]); //x, y
+            clickListener.mouseClicked(applet, identifier[0], identifier[1]); //x, y
         }
     }
 
@@ -74,6 +74,7 @@ public class PButton {
         //Respective behavior in corresponding states
         if(currentState == State.NORMAL){
             applet.fill(appearance.getBackgroundColor());
+            applet.noStroke();
             applet.rect(x, y, width, height);
 
             //Background Image ?
@@ -216,6 +217,10 @@ public class PButton {
 
     public void setClickListener(MouseClickListener clickListener) {
         this.clickListener = clickListener;
+    }
+
+    public void setCurrentState(State currentState) {
+        this.currentState = currentState;
     }
 }
 
