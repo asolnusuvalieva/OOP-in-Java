@@ -98,6 +98,7 @@ public class PButton {
             }
         }else if(currentState == State.HOVER){
             applet.fill(appearance.getBackgroundColorHover());
+            applet.noStroke();
             applet.rect(x, y, width, height);
 
             //BackgroundImageHover ?
@@ -127,6 +128,7 @@ public class PButton {
             }
         }else if(currentState == State.ACTIVE){
             applet.fill(appearance.getBackgroundColorActive());
+            applet.noStroke();
             applet.rect(x, y, width, height);
 
             //BackgroundImageActive ?
