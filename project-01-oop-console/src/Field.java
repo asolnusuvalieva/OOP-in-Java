@@ -127,7 +127,7 @@ public class Field {
         for(int y = 0; y < height; y++) {
             outer:
             for (int x = 0; x < width; x++) {
-                //selectedX, selectedY, and cells around them are NOT places for mines
+                //selectedX, selectedY, and cells around that are NOT places for mines
                 for(int i = 0; i < SHIFTS[0].length; i++){
                     int neighbourY = selectedY + SHIFTS[0][i];
                     int neighbourX = selectedX + SHIFTS[1][i];
