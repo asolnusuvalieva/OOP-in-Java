@@ -1,10 +1,9 @@
 public class Label {
     private final String text; //text on the top of the button
-    private final int fontSize = 16;
-
-    private final int color = 0xffe0e0e0;
-    private final int colorHover = 0xffe0e0e0;
-    private final int colorActive = 0xff969696;
+    private final int fontSize = 25;
+    private final int color = 0xff001aff;
+    private final int colorHover = 0xff4a5cff;
+    private final int colorActive = 0xff0011ad;
 
     public Label(String text){
         this.text = text;
