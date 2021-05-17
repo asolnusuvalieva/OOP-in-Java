@@ -5,8 +5,7 @@ public class Main extends PApplet {
     int difficulty = 1; //BEGINNER
     GameLevel gameLevel = new GameLevel(difficulty);
     Player player = new Player(gameLevel);
-    Field field = new Field(gameLevel);
-    PButton[][] buttons = new PButton[gameLevel.getFIELD_HEIGHT()][gameLevel.getFIELD_WIDTH()];
+    Field field = new Field(gameLevel, player);
 
     public void settings(){
         fullScreen();
@@ -20,66 +19,65 @@ public class Main extends PApplet {
         this.textAlign(this.CENTER, this.CENTER);
         this.textSize(50);
         this.text("Minesweeper Game!\nBeginner Level", width/2f, height/15f);
-        float buttonSize = 64; //Just by default
+        float buttonSize = 65; //Just by default
         float centeringShiftX = width/15f;
-        float centeringShiftY = 2*height/15f;
+        float centeringShiftY = 3*height/15f;
 
-        System.out.println("I should have printed something on the screen");
         //Initializing buttons
-        for(int y = 0; y < buttons.length; y++){
-            for(int x = 0; x < buttons.length; x++){
+        for(int y = 0; y < field.buttons.length; y++){
+            for(int x = 0; x < field.buttons.length; x++){
                 float screenX = centeringShiftX + x * buttonSize;
                 float screenY = centeringShiftY + y * buttonSize;
-                buttons[y][x] = new PButton(this, screenX, screenY, buttonSize, buttonSize, "", new int[]{x, y}, player);
+                field.buttons[y][x] = new PButton(this, screenX, screenY, buttonSize, buttonSize, "", new int[]{x, y}, field);
+                field.buttons[y][x].appearance.setBackgroundImage(this.loadImage("buttonBackgroundImageNormal.png"));
+                field.buttons[y][x].appearance.setBackgroundImageHover(this.loadImage("buttonBackgroundImageHover.png"));
+                field.buttons[y][x].appearance.setBackgroundImageActive(this.loadImage("buttonBackgroundImageActive.png"));
             }
         }
-
-        field.present(this, buttons);
-
-        field.putMines(player.getSelectedX(), player.getSelectedY());
-        player.totalCellsToUncover -= field.floodUncover(player.getSelectedX(), player.getSelectedY());
-        System.out.println("I placed all the mines and first floodUncover is gone");
-        field.present(this, buttons);
     }
 
     public void draw() {
-        //TODO: Is this OK?
-        for(int y = 0; y < buttons.length; y++) {
-            for (int x = 0; x < buttons.length; x++) {
-                buttons[y][x].draw();
+        for(int y = 0; y < field.buttons.length; y++) {
+            for (int x = 0; x < field.buttons.length; x++) {
+                field.buttons[y][x].draw();
             }
         }
     }
 
     /* Working with mouse for the window itself */
     public void mousePressed() {
-        for(int y = 0; y < buttons.length; y++) {
-            for (int x = 0; x < buttons.length; x++) {
-                buttons[y][x].mousePressed();
+        for(int y = 0; y < field.buttons.length; y++) {
+            for (int x = 0; x < field.buttons.length; x++) {
+                field.buttons[y][x].mousePressed();
             }
         }
     }
 
     public void mouseReleased() {
-        for(int y = 0; y < buttons.length; y++) {
-            for (int x = 0; x < buttons.length; x++) {
-                buttons[y][x].mouseReleased();
+        for(int y = 0; y < field.buttons.length; y++) {
+            for (int x = 0; x < field.buttons.length; x++) {
+                field.buttons[y][x].mouseReleased();
             }
         }
     }
 
     public void mouseClicked() {
-        for(int y = 0; y < buttons.length; y++) {
-            for (int x = 0; x < buttons.length; x++) {
-                buttons[y][x].mouseClicked();
+        for(int y = 0; y < field.buttons.length; y++) {
+            for (int x = 0; x < field.buttons.length; x++) {
+                field.buttons[y][x].mouseClicked();
             }
+        }
+
+        if(player.isLost() || player.isWon()){
+            field.presentWinOrLost(this);
+            System.out.println(player.isLost()? "You lost!" : "You won!");
         }
     }
 
     public void mouseMoved(MouseEvent event) {
-        for(int y = 0; y < buttons.length; y++) {
-            for (int x = 0; x < buttons.length; x++) {
-                buttons[y][x].mouseMoved();
+        for(int y = 0; y < field.buttons.length; y++) {
+            for (int x = 0; x < field.buttons.length; x++) {
+                field.buttons[y][x].mouseMoved();
             }
         }
     }
