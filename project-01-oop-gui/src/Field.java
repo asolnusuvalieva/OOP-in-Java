@@ -1,13 +1,9 @@
 import processing.core.PApplet;
-import processing.core.PImage;
 
 import java.util.ArrayList;
 
-public class Field {
-    private static final String MINE_CELL = "💣";
-    private static final String EMPTY_CELL = "⬜️";
-    private static final String COVERED_CELL = "🟦";
-
+public class Field implements MouseClickListener{
+    private static boolean wasFirstWave = false;
     private static final int MINE_VALUE = -1;
     private static final int EMPTY_VALUE = 0;
 
@@ -23,6 +19,8 @@ public class Field {
 
     private final int[][] field;
     public boolean[][] uncoveredField;
+    private Player player;
+    public PButton[][] buttons;
 
     /* Getters */
     public int getWidth() {
@@ -42,37 +40,53 @@ public class Field {
     }
 
     /* Methods */
-    public Field(GameLevel gameLevel){
+    public Field(GameLevel gameLevel, Player player){
         mines = gameLevel.getMINES();
         width = gameLevel.getFIELD_WIDTH();
         height = gameLevel.getFIELD_HEIGHT();
+        this.player = player;
 
         field = new int[height][width];
         uncoveredField = new boolean[height][width]; //default values = false; all cells are closed
+        buttons = new PButton[gameLevel.getFIELD_HEIGHT()][gameLevel.getFIELD_WIDTH()];
     }
 
-    public void presentWinOrLost (PApplet applet, PButton[][] buttons){
+    public void presentWinOrLost (PApplet applet){
         uncoveredField = null;
-        present(applet, buttons);
+        present(applet);
     }
 
-    public void present(PApplet applet, PButton[][] buttons){
+    public void present(PApplet applet){
         for(int y = 0; y < height; y++){
             for(int x = 0; x < width; x++){
                 if(uncoveredField == null || uncoveredField[y][x]){ //if the cell is open
-                    System.out.println("It should not happen");
                     int cell = field[y][x];
                     if(cell == MINE_VALUE){
+                        //Удаление старого дерьма
+                        buttons[y][x].appearance.setBackgroundImage(null);
+                        buttons[y][x].appearance.setBackgroundImageHover(null);
+                        buttons[y][x].appearance.setBackgroundImageActive(null);
+
+                        buttons[y][x].setCurrentState(PButton.State.NORMAL);
                         buttons[y][x].appearance.setBackgroundColor(0xffff0000); //red
                         buttons[y][x].appearance.setIcon(applet.loadImage("mine.png"));
-//                        System.out.print(MINE_CELL);
-                    }else if(cell != 0){ //Some number
+                        buttons[y][x].setEnabled(false);
+                    }else if(cell == 0){
+                        //Удаление старого дерьма
+                        buttons[y][x].appearance.setBackgroundImage(null);
+                        buttons[y][x].appearance.setBackgroundImageHover(null);
+                        buttons[y][x].appearance.setBackgroundImageActive(null);
+
+                        buttons[y][x].appearance.setIcon(applet.loadImage("buttonEmptyCellBackgroundImage.png"));//light yellow
+                        buttons[y][x].setEnabled(false);
+                    }else{//Some number
+                        buttons[y][x].setCurrentState(PButton.State.NORMAL);
                         buttons[y][x].setLabel(new Label(String.valueOf(cell)));
+                        buttons[y][x].setEnabled(false);
                     }
-                }
+                }// otherwise there will be a default appearance of the button
 
                 buttons[y][x].draw();
-//              System.out.print(COVERED_CELL);
             }
         }
     }
@@ -144,5 +158,31 @@ public class Field {
 
     private boolean areCoordsInside(int x, int y){
         return x >= 0 && x < width && y >= 0 && y < height;
+    }
+
+    public void mouseClicked(PApplet applet, int selectedCellX, int selectedCellY) {
+        if(!wasFirstWave){
+            putMines(selectedCellX, selectedCellY);
+            player.totalCellsToUncover -= floodUncover(selectedCellX, selectedCellY);
+            wasFirstWave = true;
+            present(applet);
+        }else{
+            int cell = getCell(selectedCellX, selectedCellY);
+            if(cell == Field.getMineValue()){
+                uncoveredField[selectedCellY][selectedCellX] = true;
+                player.setLost(true);
+            }else if(cell == Field.getEmptyValue()){
+                player.totalCellsToUncover -= floodUncover(selectedCellX, selectedCellY);
+            }else{
+                uncoveredField[selectedCellY][selectedCellX] = true;
+                player.totalCellsToUncover--;
+            }
+
+            if(player.totalCellsToUncover == 0){
+                player.setWon(true);
+            }
+            present(applet);
+            System.out.println("This cell (" + selectedCellX + ", " + selectedCellY + ") was clicked!");
+        }
     }
 }
