@@ -2,12 +2,12 @@ import processing.core.PApplet;
 import processing.event.MouseEvent;
 
 public class Main extends PApplet implements MouseClickListener {
-    private final int difficulty = 2; //BEGINNER by default
-    GameLevel gameLevel = new GameLevel(difficulty);
-    Player player = new Player(gameLevel);
-    Field field = new Field(gameLevel, player);
-    private int flagCounter = gameLevel.getMINES();
-    private int timeCounter = 0;
+    private int difficulty = 1; //BEGINNER by default
+    GameLevel gameLevel;
+    Player player;
+    Field field;
+    public static int flagCounter; //it can stay public
+    private int timeCounter;
 
     //Separate Buttons
     PButton beginnerButton;
@@ -15,6 +15,8 @@ public class Main extends PApplet implements MouseClickListener {
     PButton expertButton;
 
     PButton smileyFaceButton;
+    public static PButton flagCounterButton;
+
 
     public void settings(){
         fullScreen();
@@ -22,6 +24,11 @@ public class Main extends PApplet implements MouseClickListener {
 
     public void setup() {
         background(0);
+        gameLevel = new GameLevel(difficulty);
+        player = new Player(gameLevel);
+        field = new Field(gameLevel, player);
+        flagCounter = gameLevel.getMINES();
+        timeCounter = 0;
 
         //Three Level Buttons
         float levelButtonWidth = width/8f;
@@ -29,7 +36,7 @@ public class Main extends PApplet implements MouseClickListener {
 
         float beginnerButtonX = 7*width/8f - levelButtonWidth/2f;
         float beginnerButtonY = height/4f - levelButtonHeight;
-        beginnerButton = new PButton(this, beginnerButtonX, beginnerButtonY, levelButtonWidth, levelButtonHeight, "Beginner", null, this);
+        beginnerButton = new PButton(this, beginnerButtonX, beginnerButtonY, levelButtonWidth, levelButtonHeight, "Beginner", new int[]{-1, -1}, this);
         beginnerButton.getLabel().setFontSize(25);
         beginnerButton.getLabel().setColor(0xff00cc22); //green
         beginnerButton.getLabel().setColorHover(0xff00cc22); //green
@@ -38,7 +45,7 @@ public class Main extends PApplet implements MouseClickListener {
 
         float intermediateButtonX = beginnerButtonX;
         float intermediateButtonY = height/2f - levelButtonHeight;
-        intermediateButton = new PButton(this, intermediateButtonX, intermediateButtonY, levelButtonWidth, levelButtonHeight, "Intermediate", null, this);
+        intermediateButton = new PButton(this, intermediateButtonX, intermediateButtonY, levelButtonWidth, levelButtonHeight, "Intermediate", new int[]{-2, -2}, this);
         intermediateButton.getLabel().setFontSize(25);
         intermediateButton.getLabel().setColor(0xff00c3ff); //blue
         intermediateButton.getLabel().setColorHover(0xff00c3ff); //blue
@@ -47,12 +54,11 @@ public class Main extends PApplet implements MouseClickListener {
 
         float expertButtonX = beginnerButtonX;
         float expertButtonY = 3*height/4f - levelButtonHeight;
-        expertButton = new PButton(this, expertButtonX, expertButtonY, levelButtonWidth, levelButtonHeight, "Expert", null, this);
+        expertButton = new PButton(this, expertButtonX, expertButtonY, levelButtonWidth, levelButtonHeight, "Expert", new int[]{-3, -3}, this);
         expertButton.getLabel().setFontSize(25);
         expertButton.getLabel().setColor(0xffff00dd); //purple
         expertButton.getLabel().setColorHover(0xffff00dd); //purple
         expertButton.getLabel().setColorActive(0xffff00dd); //purple
-
 
         //Cell Buttons
         float buttonCellSize = 32; //Just by default
@@ -74,8 +80,18 @@ public class Main extends PApplet implements MouseClickListener {
         float smileyFaceButtonSize = 64; //64 is convenient for the sake of image
         float smileyFaceButtonX = centeringShiftX + (gameLevel.getFIELD_WIDTH() * buttonCellSize)/2f - smileyFaceButtonSize/2f;
         float smileyFaceButtonY = centeringShiftY - smileyFaceButtonSize - 5; //5 is just to give some space
-        smileyFaceButton = new PButton(this, smileyFaceButtonX, smileyFaceButtonY, smileyFaceButtonSize, smileyFaceButtonSize, "", null, this); //TODO: Don't touch it
+        smileyFaceButton = new PButton(this, smileyFaceButtonX, smileyFaceButtonY, smileyFaceButtonSize, smileyFaceButtonSize, "", new int[]{-4, -4}, this);
         smileyFaceButton.appearance.setBackgroundImage(this.loadImage("smileyFaceNormal.png"));
+
+
+        float flagCounterButtonX = centeringShiftX;
+        float flagCounterButtonY = centeringShiftY - smileyFaceButtonSize - 5;
+        float flagCounterButtonWidth = smileyFaceButtonX - centeringShiftX - 20; //20 is just to give space
+        flagCounterButton = new PButton(this, flagCounterButtonX, flagCounterButtonY, flagCounterButtonWidth, smileyFaceButtonSize, String.valueOf(flagCounter), null, null);
+        flagCounterButton.appearance.setBackgroundColor(0xff000000); //black
+        flagCounterButton.getLabel().setColor(0xffff0000); //red
+        flagCounterButton.getLabel().setFontSize((int)smileyFaceButtonSize);
+        flagCounterButton.setEnabled(false);
     }
 
     public void draw() {
@@ -85,6 +101,7 @@ public class Main extends PApplet implements MouseClickListener {
         intermediateButton.draw();
         expertButton.draw();
         smileyFaceButton.draw();
+        flagCounterButton.draw();
 
         for(int y = 0; y < field.buttons.length; y++) {
             for (int x = 0; x < field.buttons.length; x++) {
@@ -133,8 +150,13 @@ public class Main extends PApplet implements MouseClickListener {
         smileyFaceButton.mouseClicked();
 
         if(player.isLost() || player.isWon()){
-            field.presentWinOrLost(this);
-            System.out.println(player.isLost()? "You lost!" : "You won!");
+            if(player.isWon()){
+                smileyFaceButton.appearance.setBackgroundImage(this.loadImage("smileyFaceVictory.png"));
+                field.present(this);
+            }else if(player.isLost()){
+                smileyFaceButton.appearance.setBackgroundImage(this.loadImage("smileyFaceLost.png"));
+                field.presentWinOrLost(this);
+            }
         }
     }
 
@@ -164,14 +186,21 @@ public class Main extends PApplet implements MouseClickListener {
 
     //What to do when level buttons get pressed?
     public void mouseClicked(PApplet applet, int selectedCellX, int selectedCellY) {
-        //TODO: THINK
+        if(selectedCellX == -1 && selectedCellY == -1){ //Beginner button
+            difficulty = 1;
+        }else if(selectedCellX == -2 && selectedCellY == -2){ //Intermediate button
+            difficulty = 2;
+        }else if(selectedCellX == -3 && selectedCellY == -3){ //Expert button
+            difficulty = 3;
+        } //if smiley face was pressed, then don't change difficulty, just start from scratch
+
+        Field.setWasFirstWave(false);
+        setup();
         System.out.println("Level Buttons were pressed");
     }
 
     public static void main(String[] args) {
         PApplet.main("Main"); //It's just a requirement from Processing
     }
-
-
 }
 
