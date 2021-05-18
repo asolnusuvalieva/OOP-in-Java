@@ -1,11 +1,70 @@
-Problems I have now:
-- Problems with animation (the right display of the buttons)
+Timer and FlagCounter
+if flag is removed, flagCounter should behave appropriately
+
+
+
+
+
+GUI Version:
+**From the video**
+int/PButton flagCounter; //disabled - no listener needed
+int/PButton timeCounter; //disabled - no listener needed
+PButton smileyFace; //it resets the game if gets clicked; changes its face if loose/win {What to do when it gets clicked?}
+
+PButton beginnerButton; //it resets the difficulty, therefore the grid
+PButton intermediateButton; //it resets the difficulty, therefore the grid
+PButton expertButton; //it resets the difficulty, therefore the grid
+
+//Grid
+
+**From my logic**
+int difficulty = 1; //by default
+GameLevel gameLevel;
+Player player;
+Field field;
+
+TODO:
+Связать все вместе туго, понятно, and in a *maintainable* way!
+Сделать последние штрихи в анимации/нарисовке...
+
+
+
+
+
+
+
+
+
+
+
+Decision:
+levelButtonSize = width/8f;
+cellButtonSize = 32;
+
+
+[ What I should implement next ]
+- Let the user choose a difficulty (beginner is by default)
+    * Resize and position all the elements accordingly
+    * Have images, icons of appropriate sizes
+Idea:
+Just divide the screen into two parts; give the smallest ones to difficulty buttons while the large part will go to the grid itself.
+=> you will just have to reposition of starting X, Y, but no resizing elements.
+
+- Elements to add
+* Mine counter (which counts flags)
+* Smiley Face
+* Time counter
+* A feature to add/set flags on the right click
+
+
 
 /*.
-В первый раз, гарантированно, что floodUncover() откроет только empty cells, а вот уже в след. раз будет проверяться -
-если мина, но сразу проигрыш.
+В первый раз гарантированно, что floodUncover() откроет только empty cells, а вот уже в след. раз будет проверяться -
+если мина, то сразу проигрыш.
 
-Моя последняя нажатая мина выходила с темным фоном, когда остальные - нормально.
-Причина в том, что остальные находятся в нормальном состоянии и для них settingBackground to red WORKS while this is in the Active
-mode, and when drawing, activeBackground is applied.
+Problems that seem like I solved:
+1) Buttons with numbers were hovered. Before disabling it, I have to make sure to put it into Normal mode (since according to the state,
+everything will be drawn).
+2) The button I clicked which contained a mine value, was with a background for an active mode. Before disabling it, I have to make sure to put it into Normal mode
+(since according to the state, the corresponding background will be set).
 */
