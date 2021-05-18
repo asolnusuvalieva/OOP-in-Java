@@ -1,6 +1,4 @@
-Timer and FlagCounter
-if flag is removed, flagCounter should behave appropriately
-
+Time is being weird sometimes
 
 
 
@@ -23,9 +21,6 @@ GameLevel gameLevel;
 Player player;
 Field field;
 
-TODO:
-Связать все вместе туго, понятно, and in a *maintainable* way!
-Сделать последние штрихи в анимации/нарисовке...
 
 
 
