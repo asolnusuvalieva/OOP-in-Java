@@ -1,5 +1,5 @@
 public class Label {
-    private final String text; //text on the top of the button
+    private String text; //text on the top of the button
     private int fontSize = 15;
     private int color = 0xff001aff;
     private int colorHover = 0xff4a5cff;
@@ -43,6 +43,10 @@ public class Label {
 
     public void setColorActive(int colorActive) {
         this.colorActive = colorActive;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }
 
