@@ -8,6 +8,8 @@ public class Main extends PApplet implements MouseClickListener {
     Field field;
     public static int flagCounter; //it can stay public
     private int timeCounter;
+    private int secondTracker;
+    boolean keepCounting;
 
     //Separate Buttons
     PButton beginnerButton;
@@ -16,11 +18,13 @@ public class Main extends PApplet implements MouseClickListener {
 
     PButton smileyFaceButton;
     public static PButton flagCounterButton;
+    private PButton timeCounterButton;
 
 
     public void settings(){
         fullScreen();
     }
+
 
     public void setup() {
         background(0);
@@ -92,16 +96,39 @@ public class Main extends PApplet implements MouseClickListener {
         flagCounterButton.getLabel().setColor(0xffff0000); //red
         flagCounterButton.getLabel().setFontSize((int)smileyFaceButtonSize);
         flagCounterButton.setEnabled(false);
+
+        float timeCounterButtonWidth = smileyFaceButtonX - centeringShiftX - 20; //20 is just to give space
+        float timeCounterButtonX = centeringShiftX + (gameLevel.getFIELD_WIDTH() * buttonCellSize) - timeCounterButtonWidth;
+        timeCounterButton = new PButton(this, timeCounterButtonX, flagCounterButtonY, timeCounterButtonWidth, smileyFaceButtonSize, String.valueOf(timeCounter), null, null);
+
+        timeCounterButton.appearance.setBackgroundColor(0xff000000); //black
+        timeCounterButton.getLabel().setColor(0xfff2ff00); //yellow
+        timeCounterButton.getLabel().setFontSize((int)smileyFaceButtonSize);
+        timeCounterButton.setEnabled(false);
+
+        timeCounter = 0;
+        keepCounting = true;
+        secondTracker = second();
     }
+
 
     public void draw() {
         stroke(255, 0, 0);
         line( 6*width/8f, 0, 6*width/8f, height);
+
+        int currentSecond = second();
+        if(currentSecond > secondTracker && keepCounting){
+            timeCounter++;
+            timeCounterButton.getLabel().setText(String.valueOf(timeCounter));
+            secondTracker = currentSecond;
+        }
+
         beginnerButton.draw();
         intermediateButton.draw();
         expertButton.draw();
         smileyFaceButton.draw();
         flagCounterButton.draw();
+        timeCounterButton.draw();
 
         for(int y = 0; y < field.buttons.length; y++) {
             for (int x = 0; x < field.buttons.length; x++) {
@@ -149,14 +176,14 @@ public class Main extends PApplet implements MouseClickListener {
         expertButton.mouseClicked();
         smileyFaceButton.mouseClicked();
 
-        if(player.isLost() || player.isWon()){
-            if(player.isWon()){
-                smileyFaceButton.appearance.setBackgroundImage(this.loadImage("smileyFaceVictory.png"));
-                field.present(this);
-            }else if(player.isLost()){
-                smileyFaceButton.appearance.setBackgroundImage(this.loadImage("smileyFaceLost.png"));
-                field.presentWinOrLost(this);
-            }
+        if(player.isWon()){
+            keepCounting = false;
+            smileyFaceButton.appearance.setBackgroundImage(this.loadImage("smileyFaceVictory.png"));
+            field.present(this);
+        }else if(player.isLost()){
+            keepCounting = false;
+            smileyFaceButton.appearance.setBackgroundImage(this.loadImage("smileyFaceLost.png"));
+            field.presentWinOrLost(this);
         }
     }
 
@@ -196,7 +223,6 @@ public class Main extends PApplet implements MouseClickListener {
 
         Field.setWasFirstWave(false);
         setup();
-        System.out.println("Level Buttons were pressed");
     }
 
     public static void main(String[] args) {
