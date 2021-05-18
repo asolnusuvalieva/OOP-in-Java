@@ -39,6 +39,10 @@ public class Field implements MouseClickListener{
         return field[y][x];
     }
 
+    public static void setWasFirstWave(boolean wasFirstWave) {
+        Field.wasFirstWave = wasFirstWave;
+    }
+
     /* Methods */
     public Field(GameLevel gameLevel, Player player){
         mines = gameLevel.getMINES();
@@ -62,7 +66,7 @@ public class Field implements MouseClickListener{
                 if(uncoveredField == null || uncoveredField[y][x]){ //if the cell is open
                     int cell = field[y][x];
                     if(cell == MINE_VALUE){
-                        //Удаление старого дерьма
+                        //Удаление старого дерьма (даже если там стоял флаг)
                         buttons[y][x].appearance.setBackgroundImage(null);
                         buttons[y][x].appearance.setBackgroundImageHover(null);
                         buttons[y][x].appearance.setBackgroundImageActive(null);
@@ -72,7 +76,7 @@ public class Field implements MouseClickListener{
                         buttons[y][x].appearance.setIcon(applet.loadImage("mine.png"));
                         buttons[y][x].setEnabled(false);
                     }else if(cell == 0){
-                        //Удаление старого дерьма
+                        //Удаление старого дерьма (даже если там стоял флаг)
                         buttons[y][x].appearance.setBackgroundImage(null);
                         buttons[y][x].appearance.setBackgroundImageHover(null);
                         buttons[y][x].appearance.setBackgroundImageActive(null);
@@ -80,6 +84,10 @@ public class Field implements MouseClickListener{
                         buttons[y][x].appearance.setIcon(applet.loadImage("buttonEmptyCellBackgroundImage.png"));//light yellow
                         buttons[y][x].setEnabled(false);
                     }else{//Some number
+                        if(buttons[y][x].isFlagged()){
+                            buttons[y][x].appearance.setBackgroundImage(applet.loadImage("buttonBackgroundImageNormal.png"));
+                            buttons[y][x].setFlagged(false);
+                        }
                         buttons[y][x].setCurrentState(PButton.State.NORMAL);
                         buttons[y][x].setLabel(new Label(String.valueOf(cell)));
                         buttons[y][x].setEnabled(false);
@@ -117,8 +125,6 @@ public class Field implements MouseClickListener{
         int uncoveredCells = 0;
 
         //Uncovering empty cells and stop when meeting non-zero cells
-        uncoveredField[selectedY][selectedX] = true;
-
         for(int i = 0; i < SHIFTS[0].length; i++) {
             int neighbourY = selectedY + SHIFTS[0][i];
             int neighbourX = selectedX + SHIFTS[1][i];
@@ -171,6 +177,7 @@ public class Field implements MouseClickListener{
             if(cell == Field.getMineValue()){
                 uncoveredField[selectedCellY][selectedCellX] = true;
                 player.setLost(true);
+//                Main.flagCounter =
             }else if(cell == Field.getEmptyValue()){
                 player.totalCellsToUncover -= floodUncover(selectedCellX, selectedCellY);
             }else{
@@ -180,6 +187,7 @@ public class Field implements MouseClickListener{
 
             if(player.totalCellsToUncover == 0){
                 player.setWon(true);
+                Main.flagCounter = 0;
             }
             present(applet);
             System.out.println("This cell (" + selectedCellX + ", " + selectedCellY + ") was clicked!");
