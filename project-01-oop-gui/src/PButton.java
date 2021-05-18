@@ -20,6 +20,7 @@ public class PButton {
     private boolean enabled = true; //can and can NOT interact with the button
     private final int[] identifier; //to count cells in 2D array
     private MouseClickListener clickListener; //Пусть кто то другой решает, что делать если нажали на кнопку
+    private boolean flagged = false;
 
     // Methods
     public PButton(PApplet applet, float x, float y, float width, float height, String label, int[] identifier, MouseClickListener clickListener){
@@ -39,7 +40,24 @@ public class PButton {
 
         //mouse pressed AND released, and the mouse didn't move too far
         if(areMouseCoordsInside(applet.mouseX, applet.mouseY)){
-            clickListener.mouseClicked(applet, identifier[0], identifier[1]); //x, y
+            if(applet.mouseButton == 39 && clickListener instanceof Field){
+                if(!flagged){
+                    //RIGHT click to set the flag
+                    appearance.setBackgroundColorHover(0xff5e5e5e); //Просто для красоты
+                    appearance.setBackgroundImage(applet.loadImage("flag.png"));
+                    appearance.setBackgroundImageHover(applet.loadImage("flagHover.png"));
+                    currentState = State.NORMAL;
+                    flagged = true;
+                    Main.flagCounter--;
+                    Main.flagCounterButton.label.setText(String.valueOf(Main.flagCounter));
+                }else{
+                    appearance.setBackgroundImage(applet.loadImage("buttonBackgroundImageNormal.png"));
+                    appearance.setBackgroundImageHover(applet.loadImage("buttonBackgroundImageHover.png"));
+                    flagged = false;
+                }
+            }else{
+                clickListener.mouseClicked(applet, identifier[0], identifier[1]); //x, y
+            }
         }
     }
 
@@ -223,6 +241,14 @@ public class PButton {
 
     public void setCurrentState(State currentState) {
         this.currentState = currentState;
+    }
+
+    public boolean isFlagged() {
+        return flagged;
+    }
+
+    public void setFlagged(boolean flagged) {
+        this.flagged = flagged;
     }
 }
 
