@@ -53,6 +53,8 @@ public class PButton {
                 }else{
                     appearance.setBackgroundImage(applet.loadImage("buttonBackgroundImageNormal.png"));
                     appearance.setBackgroundImageHover(applet.loadImage("buttonBackgroundImageHover.png"));
+                    Main.flagCounter++;
+                    Main.flagCounterButton.label.setText(String.valueOf(Main.flagCounter));
                     flagged = false;
                 }
             }else{
