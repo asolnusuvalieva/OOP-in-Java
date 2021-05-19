@@ -1,17 +1,18 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-class ColorChanger extends MouseAdapter {
+class ColorChanger implements ActionListener {
     private final JPanel panel;
     private final Color color;
     public ColorChanger(JPanel panel, Color color){
         this.panel = panel;
         this.color = color;
     }
+
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void actionPerformed(ActionEvent e) {
         panel.setBackground(color);
     }
 }
@@ -33,13 +34,13 @@ public class Problem02 extends JFrame {
 
         /* Creating Buttons */
         JButton redButton = new JButton("RED"); //a button with a text/name
-        redButton.addMouseListener(new ColorChanger(mainPanel, Color.RED)); //inside, it will call mouseClicked() of ColorChanger cb it's just a MouseAdapter
+        redButton.addActionListener(new ColorChanger(mainPanel, Color.RED)); //inside, it will call mouseClicked() of ColorChanger cb it's just a MouseAdapter
 
         JButton greenButton = new JButton("GREEN"); //a button with a text/name
-        greenButton.addMouseListener(new ColorChanger(mainPanel, Color.GREEN));
+        greenButton.addActionListener(new ColorChanger(mainPanel, Color.GREEN));
 
         JButton blueButton = new JButton("BLUE"); //a button with a text/name
-        blueButton.addMouseListener(new ColorChanger(mainPanel, Color.BLUE));
+        blueButton.addActionListener(new ColorChanger(mainPanel, Color.BLUE));
 
         /* Toolbar Panel */
         JPanel toolbarPanel = new JPanel();
@@ -68,6 +69,11 @@ It leaves all the required methods with empty implementation.
 In this case, it's better to inherit rather than directly implement a particular interface
 bc it will force us to implement methods we don't need; while inheriting from MouseAdapter,
 we can just override the one we need, and it looks beautiful :)
+ */
+
+/*
+ActionListener is a listener for universal devices (not only mouse but also,
+any other input devices such as a keyboard)
  */
 
 //Final Version
