@@ -62,5 +62,12 @@ public class Problem02 extends JFrame {
          */
     }
 }
+/*
+MouseAdapter is an abstract class that implements MouseListener, MouseWheelListener, MouseMotionListener.
+It leaves all the required methods with empty implementation.
+In this case, it's better to inherit rather than directly implement a particular interface
+bc it will force us to implement methods we don't need; while inheriting from MouseAdapter,
+we can just override the one we need, and it looks beautiful :)
+ */
 
 //Final Version
