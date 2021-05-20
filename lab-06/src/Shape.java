@@ -17,4 +17,12 @@ abstract class Shape {
     }
 
     abstract boolean contains(int x, int y);
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 }

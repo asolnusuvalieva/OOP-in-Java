@@ -1,5 +1,5 @@
 public class Circle extends Shape {
-    private int radius;
+    private final int radius;
 
     Circle(int x, int y, int radius) {
         super(x, y);
@@ -7,9 +7,15 @@ public class Circle extends Shape {
     }
 
     boolean contains(int mouseX, int mouseY){
-        int dx = x - mouseX;
-        int dy = y - mouseY;
+//        int dx = x - mouseX; (our logic)
+        int dx = x + radius - mouseX;
+//        int dy = y - mouseY;
+        int dy = y + radius - mouseY;
         return dx * dx + dy * dy < radius * radius; //a^2 + b^2  = c^2
+    }
+
+    public int getRadius() {
+        return radius;
     }
 
     @Override

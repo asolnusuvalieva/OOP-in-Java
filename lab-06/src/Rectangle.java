@@ -14,4 +14,12 @@ public class Rectangle extends Shape {
     public String toString() {
         return String.format("Rect: %d, %d, %d, %d", x, y, width, height);
     }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 }
