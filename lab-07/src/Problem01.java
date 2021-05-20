@@ -82,3 +82,8 @@ public class Problem01 {
         System.out.println();
     }
 }
+/*
+So Comparable<T> is an interface that has 1 required method int compareTo(T o).
+Returns a negative integer, zero, or a positive integer
+as this object is less than, equal to, or greater than the specified object.
+ */
