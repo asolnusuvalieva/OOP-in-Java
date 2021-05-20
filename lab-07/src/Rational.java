@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-public class Rational implements MyComparable<Rational>{
+public class Rational implements MyComparable<Rational>{ //before, it was Comparable
     private final BigInteger numerator;
     private final BigInteger denominator;
 
