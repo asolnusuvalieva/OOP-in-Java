@@ -1,10 +1,8 @@
-public class Rectangle {
-    private final int x, y;
+public class Rectangle extends Shape {
     private final int width, height;
 
     public Rectangle(int x, int y, int width, int height) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
         this.width = width;
         this.height = height;
     }
