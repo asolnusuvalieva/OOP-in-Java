@@ -93,36 +93,6 @@ class Robot{ //a circle
     }
 }
 
-class RobotController extends KeyAdapter { //the same logic as MouseAdapter
-    private final JPanel robotCheckerboard; //ask Java Swing to update when a robot moves
-    private final Robot robot;
-
-    RobotController(JPanel robotCheckerboard, Robot robot){
-        this.robotCheckerboard = robotCheckerboard;
-        this.robot = robot;
-    }
-    public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()){
-            case KeyEvent.VK_UP:
-                robot.moveUp();
-                robotCheckerboard.repaint(); //you are invalid, redraw
-                break;
-            case KeyEvent.VK_DOWN:
-                robot.moveDown();
-                robotCheckerboard.repaint(); //you are invalid, redraw
-                break;
-            case KeyEvent.VK_LEFT:
-                robot.moveLeft();
-                robotCheckerboard.repaint(); //you are invalid, redraw
-                break;
-            case KeyEvent.VK_RIGHT:
-                robot.moveRight();
-                robotCheckerboard.repaint(); //you are invalid, redraw
-                break;
-        }
-    }
-}
-
 class RobotCheckerboard extends JPanel {
     private final Field field;
     private final Robot robot;
@@ -166,6 +136,36 @@ class RobotCheckerboard extends JPanel {
         int screenY = centeringShiftY + robot.getY() * cellSize;
         g.setColor(Color.RED);
         g.fillOval(screenX, screenY, cellSize, cellSize);
+    }
+}
+
+class RobotController extends KeyAdapter { //the same logic as MouseAdapter
+    private final JPanel robotCheckerboard; //ask Java Swing to update when a robot moves
+    private final Robot robot;
+
+    RobotController(JPanel robotCheckerboard, Robot robot){
+        this.robotCheckerboard = robotCheckerboard;
+        this.robot = robot;
+    }
+    public void keyPressed(KeyEvent e) {
+        switch (e.getKeyCode()){
+            case KeyEvent.VK_UP:
+                robot.moveUp();
+                robotCheckerboard.repaint(); //you are invalid, redraw
+                break;
+            case KeyEvent.VK_DOWN:
+                robot.moveDown();
+                robotCheckerboard.repaint(); //you are invalid, redraw
+                break;
+            case KeyEvent.VK_LEFT:
+                robot.moveLeft();
+                robotCheckerboard.repaint(); //you are invalid, redraw
+                break;
+            case KeyEvent.VK_RIGHT:
+                robot.moveRight();
+                robotCheckerboard.repaint(); //you are invalid, redraw
+                break;
+        }
     }
 }
 
