@@ -1,3 +1,5 @@
+package semester1;
+
 import java.util.Scanner;
 /*
 I -> each uppercase or lowercase LETTER must be shifted 3 positions to the right, according to the ASCII table
