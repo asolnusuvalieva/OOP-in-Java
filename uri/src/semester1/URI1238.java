@@ -1,3 +1,5 @@
+package semester1;
+
 import java.util.Scanner;
 public class URI1238 {
     public static void main(String[] args) {
