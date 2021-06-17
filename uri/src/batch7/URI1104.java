@@ -1,9 +1,10 @@
 package batch7;
-
 import java.util.Scanner;
-
+/*
+    - Each can have repeating cards
+    - Each has to give cards that other doesn't have
+ */
 public class URI1104 {
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int aliceCardsQ;
