@@ -1,7 +1,6 @@
 package batch6;
 
 import java.util.Scanner;
-
 public class URI1218 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
