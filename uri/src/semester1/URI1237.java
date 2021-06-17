@@ -1,3 +1,5 @@
+package semester1;
+
 import java.util.Scanner;
 /*
 Find the longest common substring between the two informed Strings.
