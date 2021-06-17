@@ -1,3 +1,5 @@
+package semester1;
+
 import java.util.Scanner;
 /*
 A sentence is called dancing if its first letter is uppercase
