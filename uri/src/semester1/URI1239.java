@@ -1,3 +1,5 @@
+package semester1;
+
 import java.util.Scanner;
 /*
 Translating shortcuts into HTML tags!
