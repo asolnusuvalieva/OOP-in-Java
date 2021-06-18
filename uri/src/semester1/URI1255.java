@@ -1,3 +1,5 @@
+package semester1;
+
 import java.util.Scanner;
 /*
 - The frequency of letters in a given line of text.
