@@ -1,3 +1,5 @@
+package semester1;
+
 import java.util.Scanner;
 /*
 1 character -> 1 Food
