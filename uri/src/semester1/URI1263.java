@@ -1,3 +1,5 @@
+package semester1;
+
 import java.util.Scanner;
 /*
 2+ consecutive words which start with the same letter (ignoring case)
