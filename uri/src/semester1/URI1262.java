@@ -1,3 +1,5 @@
+package semester1;
+
 import java.util.Scanner;
 /*
 [] multiple processes can read from the same resource during the same clock cycle
