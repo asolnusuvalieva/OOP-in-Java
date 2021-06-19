@@ -1,3 +1,5 @@
+package semester1;
+
 import java.util.Scanner;
 /*
 Goal is to right justify given words in the same order as they appear in the input.
