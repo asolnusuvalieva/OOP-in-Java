@@ -1,3 +1,5 @@
+package semester1;
+
 import java.util.Scanner;
 /*
 the hidden message of a text is composed of the first letter from each word in the text,
