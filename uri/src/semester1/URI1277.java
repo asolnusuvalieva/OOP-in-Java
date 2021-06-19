@@ -1,3 +1,5 @@
+package semester1;
+
 import java.util.Scanner;
 /*
 print out the list of students who did not attend to enough classes
