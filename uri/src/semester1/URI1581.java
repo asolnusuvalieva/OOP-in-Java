@@ -1,3 +1,5 @@
+package semester1;
+
 import java.util.Scanner;
 /*
 The Native Language of the country: English
