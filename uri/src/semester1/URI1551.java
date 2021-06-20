@@ -1,3 +1,5 @@
+package semester1;
+
 import java.util.Scanner;
 /*
 Full -- all letters of the alphabet
