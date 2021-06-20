@@ -1,3 +1,5 @@
+package semester1;
+
 import java.util.Scanner;
 /*
 The trunk of the tree is *
