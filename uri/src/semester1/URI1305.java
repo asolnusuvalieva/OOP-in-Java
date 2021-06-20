@@ -1,3 +1,5 @@
+package semester1;
+
 import java.util.Scanner;
 /*
 Round Up if the fractional part is 0.5 or greater
