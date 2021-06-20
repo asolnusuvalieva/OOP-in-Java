@@ -1,3 +1,5 @@
+package semester1;
+
 import java.util.Scanner;
 /*
 one, two, three
