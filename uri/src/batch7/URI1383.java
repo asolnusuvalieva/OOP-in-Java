@@ -10,6 +10,7 @@ Goal is to fill the empty cells with the numbers from 1 to 9 so that
 3) every 3 * 3 box contains the numbers 1 to 9
 A grid can be represented using a two-dimensional array
  */
+
 public class URI1383 {
     static Scanner scanner = new Scanner(System.in);
 
