@@ -1,3 +1,5 @@
+package semester1;
+
 import java.util.Scanner;
 /*Time limit issue*/
 public class URI2157 {
