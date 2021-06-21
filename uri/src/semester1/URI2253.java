@@ -1,3 +1,5 @@
+package semester1;
+
 import java.util.Scanner;
 /*
 At least one uppercase letter, one lowercase letter and a number;
