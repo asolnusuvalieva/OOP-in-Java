@@ -1,4 +1,4 @@
-/*
+package semester1;/*
 # the consonants do not interfere in how digital laughter influence the feeling of transmission.
 #  the funniest digital laughter are those in which the sequences of vowels are the same
 when read in the natural order (from left to right) or in reverse order (from right to left),
