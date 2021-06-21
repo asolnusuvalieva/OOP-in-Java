@@ -1,3 +1,5 @@
+package semester1;
+
 import java.util.Scanner;
 /*
 The text is given and there, only OBI and URI can be written incorrectly,
