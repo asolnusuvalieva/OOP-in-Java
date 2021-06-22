@@ -1,3 +1,5 @@
+package semester1;
+
 import java.util.Scanner;
 /*
 N lines with exactly 14 characters that must be read
