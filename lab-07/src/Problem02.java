@@ -54,6 +54,7 @@ public class Problem02 {
         System.out.println("Before:");
         System.out.println(Arrays.toString(students));
 
+
         Arrays.sort(students, (first, second) -> first.getName().compareTo(second.getName()));
 
         System.out.println("After:");
